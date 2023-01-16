@@ -12,6 +12,7 @@
 #include "ad/rss/core/RssSituationExtraction.hpp"
 #include "spdlog/fmt/ostr.h"
 #include "spdlog/spdlog.h"
+#include "ad/rss/logging/Logger.hpp"
 
 namespace ad {
 namespace rss {
@@ -53,6 +54,9 @@ bool RssCheck::calculateProperResponse(world::WorldModel const &worldModel,
       spdlog::critical("RssCheck::calculateProperResponse>> object not properly initialized");
       return false;
     }
+
+    auto logger = logging::RssLogger::getInstance();
+    logger->logError("test error log");
 
     result = mSituationExtraction->extractSituations(worldModel, situationSnapshot);
 
