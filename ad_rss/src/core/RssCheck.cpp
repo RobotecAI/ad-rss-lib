@@ -12,7 +12,6 @@
 #include "ad/rss/core/RssSituationExtraction.hpp"
 #include "spdlog/fmt/ostr.h"
 #include "spdlog/spdlog.h"
-#include "ad/rss/logging/Logger.hpp"
 
 namespace ad {
 namespace rss {
@@ -55,9 +54,6 @@ bool RssCheck::calculateProperResponse(world::WorldModel const &worldModel,
       return false;
     }
 
-    auto logger = logging::RssLogger::getInstance();
-    logger->logError("test error log");
-
     result = mSituationExtraction->extractSituations(worldModel, situationSnapshot);
 
     if (result)
@@ -86,6 +82,24 @@ bool RssCheck::calculateProperResponse(world::WorldModel const &worldModel, stat
   state::RssStateSnapshot rssStateSnapshot;
 
   return calculateProperResponse(worldModel, situationSnapshot, rssStateSnapshot, properResponse);
+}
+
+logging::ExtendedSituationData & RssCheck::calculateProperResponse(world::WorldModel const &worldModel,
+                               situation::SituationSnapshot &situationSnapshot,
+                               state::RssStateSnapshot &rssStateSnapshot,
+                               state::ProperResponse &properResponse,
+                               bool dummy)
+{
+  // suppress dummy 
+  (void)dummy;
+
+
+ bool result = calculateProperResponse(worldModel,situationSnapshot,rssStateSnapshot,properResponse);
+ (void)result;
+
+ auto & extended_situation_data = logging::ExtendedSituationData::getInstance();
+ return extended_situation_data;
+
 }
 
 } // namespace core

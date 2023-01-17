@@ -41,7 +41,7 @@ add_library(${PROJECT_NAME}
   ${CMAKE_CURRENT_SOURCE_DIR}/src/core/RssResponseResolving.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/core/RssSituationChecking.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/core/RssSituationExtraction.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/logging/Logger.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/logging/ExtendedSituationData.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/situation/Physics.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/situation/RssFormulas.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/situation/RssStructuredSceneIntersectionChecker.cpp
