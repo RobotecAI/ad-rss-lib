@@ -23,19 +23,31 @@ ExtendedSituationData & ExtendedSituationData::getInstance()
   return *instance_;
 }
 
-void ExtendedSituationData::setSituationData(DataIntersection & data_variant)
+void ExtendedSituationData::clear()
 {
-  situation_data.data_variant = &data_variant;
+  situation_data.clear();
 }
 
-void ExtendedSituationData::setSituationData(DataNonIntersection & data_variant)
+void ExtendedSituationData::setSituationData(SituationData & situation)
 {
-  situation_data.data_variant = &data_variant;
+  this->situation_data.push_back(situation);
 }
 
-void ExtendedSituationData::setSituationData(DataUnstructured & data_variant)
+// SituationData
+
+void SituationData::setSituationData(DataIntersection & data_variant)
 {
-  situation_data.data_variant = &data_variant;
+  data_variant_ = &data_variant;
+}
+
+void SituationData::setSituationData(DataNonIntersection & data_variant)
+{
+  data_variant_ = &data_variant;
+}
+
+void SituationData::setSituationData(DataUnstructured & data_variant)
+{
+  data_variant_ = &data_variant;
 }
 
 }

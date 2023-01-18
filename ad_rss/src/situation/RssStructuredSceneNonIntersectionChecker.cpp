@@ -26,6 +26,9 @@ bool RssStructuredSceneNonIntersectionChecker::calculateRssStateNonIntersection(
     mCurrentTimeIndex = timeIndex;
   }
 
+  auto & extended_situation_data = logging::ExtendedSituationData::getInstance();
+  logging::SituationData situation_data;
+
   rssState.situationId = situation.situationId;
   rssState.situationType = situation.situationType;
   rssState.objectId = situation.objectId;
@@ -46,10 +49,14 @@ bool RssStructuredSceneNonIntersectionChecker::calculateRssStateNonIntersection(
   // first calculate the current state
   if (situation.situationType == situation::SituationType::SameDirection)
   {
+    situation_data.situation_type_id = logging::SituationTypeId::SameDirection;
+    situation_data.situation_type = "SameDirection";
     result = calculateRssStateSameDirection(situation, rssState);
   }
   else if (situation.situationType == situation::SituationType::OppositeDirection)
   {
+    situation_data.situation_type_id = logging::SituationTypeId::OppositeDirection;
+    situation_data.situation_type = "OppositeDirection";
     result = calculateRssStateOppositeDirection(situation, rssState);
   }
   else
@@ -132,6 +139,12 @@ bool RssStructuredSceneNonIntersectionChecker::calculateRssStateNonIntersection(
     }
   }
 
+  situation_data.setSituationData(logging::DataNonIntersection::getInstance());
+  situation_data.is_safe = isDangerous(rssState);
+  situation_data.object_id = static_cast<int>(situation.objectId);
+  situation_data.object_name = "Unknown";
+  extended_situation_data.situation_data.push_back(situation_data);
+
   return result;
 }
 
@@ -161,14 +174,14 @@ bool RssStructuredSceneNonIntersectionChecker::calculateLongitudinalRssStateSame
   Situation const &situation, state::LongitudinalRssState &rssState)
 {
   bool result = false;
+  auto & data_non_intersection = logging::DataNonIntersection::getInstance();
+  data_non_intersection.longitudinal_relative_position_id = logging::to_underlying(situation.relativePosition.longitudinalPosition);
 
   rssState.response = state::LongitudinalResponse::BrakeMin;
   rssState.rssStateInformation.currentDistance = situation.relativePosition.longitudinalDistance;
 
   bool isSafe = false;
 
-  auto & data_non_intersection = logging::DataNonIntersection::getInstance();
-  data_non_intersection.longitudinal_relative_position_id = logging::to_underlying(situation.relativePosition.longitudinalPosition);
 
   if ((LongitudinalRelativePosition::InFront == situation.relativePosition.longitudinalPosition)
       || (LongitudinalRelativePosition::OverlapFront == situation.relativePosition.longitudinalPosition))

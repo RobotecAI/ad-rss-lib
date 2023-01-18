@@ -53,6 +53,9 @@ bool RssCheck::calculateProperResponse(world::WorldModel const &worldModel,
       spdlog::critical("RssCheck::calculateProperResponse>> object not properly initialized");
       return false;
     }
+    
+    auto & extended_situation_data = logging::ExtendedSituationData::getInstance();
+    extended_situation_data.clear();
 
     result = mSituationExtraction->extractSituations(worldModel, situationSnapshot);
 

@@ -111,8 +111,6 @@ bool RssSituationChecking::checkSituationInputRangeChecked(situation::Situation 
                                    situation.egoVehicleState.dynamics,
                                    IsSafe::No);
 
-    auto & extended_situation_data = logging::ExtendedSituationData::getInstance();
-
     if(situation.situationType == situation::SituationType::NotRelevant)
     {
       rssState = createRssState(situation.situationId,
@@ -126,20 +124,17 @@ bool RssSituationChecking::checkSituationInputRangeChecked(situation::Situation 
             situation.situationType == situation::SituationType::OppositeDirection)
     {
       result = mNonIntersectionChecker->calculateRssStateNonIntersection(mCurrentTimeIndex, situation, rssState);
-      extended_situation_data.setSituationData(logging::DataNonIntersection::getInstance());
     }
     else if(situation.situationType == situation::SituationType::IntersectionEgoHasPriority ||
             situation.situationType == situation::SituationType::IntersectionObjectHasPriority ||
             situation.situationType == situation::SituationType::IntersectionSamePriority)
     {
       result = mIntersectionChecker->calculateRssStateIntersection(mCurrentTimeIndex, situation, rssState);
-      extended_situation_data.setSituationData(logging::DataIntersection::getInstance());
     }
     else if(situation.situationType == situation::SituationType::Unstructured)
     {
       result = mUnstructuredSceneChecker->calculateRssStateUnstructured(
         mCurrentTimeIndex, situation, rssStateSnapshot.unstructuredSceneEgoInformation, rssState);
-      extended_situation_data.setSituationData(logging::DataUnstructured::getInstance());
     }
     else
     {

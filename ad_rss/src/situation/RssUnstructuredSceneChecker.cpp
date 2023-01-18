@@ -11,6 +11,7 @@
 #include <limits>
 #include "../unstructured/TrajectoryPedestrian.hpp"
 #include "../unstructured/TrajectoryVehicle.hpp"
+#include "ad/rss/logging/ExtendedSituationData.hpp"
 #include "ad/rss/situation/Physics.hpp"
 #include "ad/rss/situation/RssFormulas.hpp"
 #include "ad/rss/unstructured/Geometry.hpp"
@@ -71,6 +72,10 @@ bool RssUnstructuredSceneChecker::calculateRssStateUnstructured(world::TimeIndex
                                                                 state::RssState &rssState)
 {
   bool result = true;
+  auto & extended_situation_data = logging::ExtendedSituationData::getInstance();
+  logging::SituationData situation_data;
+  situation_data.situation_type_id = logging::SituationTypeId::Unstructured;
+  situation_data.situation_type = "Unstructured";
 
   if (timeIndex != mCurrentTimeIndex)
   {
@@ -153,6 +158,11 @@ bool RssUnstructuredSceneChecker::calculateRssStateUnstructured(world::TimeIndex
       }
     }
   }
+  situation_data.setSituationData(logging::DataUnstructured::getInstance());
+  situation_data.is_safe = rssState.unstructuredSceneState.isSafe;
+  situation_data.object_id = static_cast<int>(situation.objectId);
+  situation_data.object_name = "Unknown";
+  extended_situation_data.situation_data.push_back(situation_data);
   return result;
 }
 
@@ -166,6 +176,7 @@ bool RssUnstructuredSceneChecker::calculateState(Situation const &situation,
   auto const &egoContinueForward = egoStateInfo.continueForwardTrajectorySet;
   auto const &otherBrake = otherStateInfo.brakeTrajectorySet;
   auto const &otherContinueForward = otherStateInfo.continueForwardTrajectorySet;
+  auto & data_unstructured = logging::DataUnstructured::getInstance();
 
   if (egoBrake.empty() || egoContinueForward.empty() || otherBrake.empty() || otherContinueForward.empty())
   {
@@ -198,6 +209,9 @@ bool RssUnstructuredSceneChecker::calculateState(Situation const &situation,
                   isSafeOtherMustBrake ? "true" : "false");
     mNewOtherMustBrakeStatesBeforeDangerThresholdTime[situation.situationId] = isSafeOtherMustBrake;
     mode = DrivingMode::ContinueForward;
+    data_unstructured.is_ego_brake_npc_brake_safe = true;
+    data_unstructured.is_ego_brake_npc_continue_safe = true;
+    data_unstructured.is_npc_brake_ego_continue_safe = true;
   }
   else
   {
@@ -216,6 +230,9 @@ bool RssUnstructuredSceneChecker::calculateState(Situation const &situation,
     {
       spdlog::debug("Situation {} Rule 1: both stopped, unsafe distance -> drive away.", situation.situationId);
       mode = DrivingMode::DriveAway;
+      data_unstructured.is_ego_brake_npc_brake_safe = true;
+      data_unstructured.is_ego_brake_npc_continue_safe = false;
+      data_unstructured.is_npc_brake_ego_continue_safe = false;
     }
 
     // Rule 2: If:
@@ -228,11 +245,17 @@ bool RssUnstructuredSceneChecker::calculateState(Situation const &situation,
       {
         spdlog::debug("Situation {} Rule 2: opponent is moving -> continue forward", situation.situationId);
         mode = DrivingMode::ContinueForward;
+        data_unstructured.is_ego_brake_npc_brake_safe = false;
+      data_unstructured.is_ego_brake_npc_continue_safe = true;
+      data_unstructured.is_npc_brake_ego_continue_safe = false;
       }
       else
       {
         spdlog::debug("Situation {} Rule 2: opponent is stopped -> drive away", situation.situationId);
         mode = DrivingMode::DriveAway;
+        data_unstructured.is_ego_brake_npc_brake_safe = false;
+      data_unstructured.is_ego_brake_npc_continue_safe = false;
+      data_unstructured.is_npc_brake_ego_continue_safe = true;
       }
     }
 
@@ -241,6 +264,9 @@ bool RssUnstructuredSceneChecker::calculateState(Situation const &situation,
     {
       spdlog::debug("Situation {} Rule 3: brake (brake collides with other brake)", situation.situationId);
       mode = DrivingMode::Brake;
+      data_unstructured.is_ego_brake_npc_brake_safe = false;
+      data_unstructured.is_ego_brake_npc_continue_safe = false;
+      data_unstructured.is_npc_brake_ego_continue_safe = false;
     }
   }
 

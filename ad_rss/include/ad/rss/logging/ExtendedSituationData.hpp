@@ -54,17 +54,17 @@ enum class SituationTypeId
 struct DataIntersection
 {
     std::string longitudinal_relative_position;
-    int relative_position_id;
+    int longitudinal_relative_position_id;
     double npc_safe_distance_to_intersection;
     double npc_current_distance_to_intersection;
     double ego_safe_distance_to_intersection;
     double ego_current_distance_to_intersection;
-    double ego_time_to_reach_intersection;
-    double ego_time_to_leave_intersection;
     double npc_time_to_reach_intersection;
     double npc_time_to_leave_intersection;
-    double same_direction_safe_distance;
+    double ego_time_to_reach_intersection;
+    double ego_time_to_leave_intersection;
     double same_direction_current_distance;
+    double same_direction_safe_distance;
     std::string previous_intersection_situation_type;
     int previous_intersection_situation_type_id;
     std::string current_intersection_situation_type;
@@ -142,24 +142,24 @@ int object_id;
 std::string object_name;
 bool is_safe;
 
-// store pointers in the variant
+std::variant<DataIntersection*, DataNonIntersection*, DataUnstructured*> data_variant_;
 
-std::variant<DataIntersection*, DataNonIntersection*, DataUnstructured*> data_variant;
+void setSituationData(DataIntersection & data_variant);
+void setSituationData(DataNonIntersection & data_variant);
+void setSituationData(DataUnstructured & data_variant);
 };
 
 class ExtendedSituationData
 {
     public: 
     static ExtendedSituationData & getInstance();
+    void clear();
 
     ExtendedSituationData(ExtendedSituationData &other) = delete;
     void operator=(const ExtendedSituationData &) = delete;
 
-    void setSituationData(DataIntersection & data_variant);
-    void setSituationData(DataNonIntersection & data_variant);
-    void setSituationData(DataUnstructured & data_variant);
-    
-    SituationData situation_data{};
+    void setSituationData(SituationData & situation);
+    std::vector<SituationData> situation_data{};
 
     protected:
     ExtendedSituationData(){};
