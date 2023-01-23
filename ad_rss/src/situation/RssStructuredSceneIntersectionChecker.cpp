@@ -347,7 +347,6 @@ bool RssStructuredSceneIntersectionChecker::calculateRssStateIntersection(world:
   situation_data.object_id = static_cast<int>(situation.objectId);
   situation_data.object_name = "Unknown";
   extended_situation_data.situation_data.push_back(situation_data);
-  extended_situation_data.situation_data.push_back(situation_data);
   return result;
 }
 
