@@ -65,10 +65,10 @@ struct DataIntersection
     double ego_time_to_leave_intersection;
     double same_direction_current_distance;
     double same_direction_safe_distance;
-    std::string previous_intersection_situation_type;
-    int previous_intersection_situation_type_id;
-    std::string current_intersection_situation_type;
-    int current_intersection_situation_type_id;
+    std::string previous_intersection_state_type;
+    int previous_intersection_state_type_id;
+    std::string current_intersection_state_type;
+    int current_intersection_state_type_id;
 
     static DataIntersection & getInstance()
     {
@@ -139,7 +139,7 @@ struct SituationData
 std::string situation_type;
 SituationTypeId situation_type_id;
 int object_id;
-std::string object_name;
+std::string object_name;  // Data not accessible, always filled "Unknown"
 bool is_safe;
 
 std::variant<DataIntersection*, DataNonIntersection*, DataUnstructured*> data_variant_;

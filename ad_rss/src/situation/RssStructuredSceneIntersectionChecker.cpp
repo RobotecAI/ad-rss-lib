@@ -122,8 +122,8 @@ bool RssStructuredSceneIntersectionChecker::checkIntersectionSafe(Situation cons
 
     data_intersection.ego_current_distance_to_intersection = static_cast<double>(rssStateInformation.currentDistance);
     data_intersection.ego_safe_distance_to_intersection = static_cast<double>(rssStateInformation.safeDistance);
-    data_intersection.npc_current_distance_to_intersection = -1;
-    data_intersection.npc_safe_distance_to_intersection = -1;
+    data_intersection.npc_current_distance_to_intersection = -1.0;  // Not calculated
+    data_intersection.npc_safe_distance_to_intersection = -1.0;
   }
   if (result && !isSafe && !situation.otherVehicleState.hasPriority)
   {
@@ -131,8 +131,6 @@ bool RssStructuredSceneIntersectionChecker::checkIntersectionSafe(Situation cons
     rssStateInformation.currentDistance = situation.otherVehicleState.distanceToEnterIntersection;
     result = checkStopInFrontIntersection(situation.otherVehicleState, rssStateInformation.safeDistance, isSafe);
 
-    data_intersection.ego_current_distance_to_intersection = -1;
-    data_intersection.ego_safe_distance_to_intersection = -1;
     data_intersection.npc_current_distance_to_intersection = static_cast<double>(rssStateInformation.currentDistance);
     data_intersection.npc_safe_distance_to_intersection = static_cast<double>(rssStateInformation.safeDistance);
   }
@@ -156,7 +154,8 @@ bool RssStructuredSceneIntersectionChecker::checkIntersectionSafe(Situation cons
                                                           rssStateInformation.safeDistance,
                                                           isSafe);
 
-      data_intersection.current_intersection_situation_type = "EgoInFront";
+      data_intersection.longitudinal_relative_position = "EgoInFront";
+      data_intersection.longitudinal_relative_position_id = logging::to_underlying(situation.relativePosition.longitudinalPosition);
       data_intersection.same_direction_current_distance = static_cast<double>(situation.relativePosition.longitudinalDistance);
       data_intersection.same_direction_safe_distance = static_cast<double>(rssStateInformation.safeDistance);
     }
@@ -169,7 +168,8 @@ bool RssStructuredSceneIntersectionChecker::checkIntersectionSafe(Situation cons
                                                           rssStateInformation.safeDistance,
                                                           isSafe);
 
-      data_intersection.current_intersection_situation_type = "OtherInFront";
+      data_intersection.longitudinal_relative_position = "OtherInFront";
+      data_intersection.longitudinal_relative_position_id = logging::to_underlying(situation.relativePosition.longitudinalPosition);
       data_intersection.same_direction_current_distance = static_cast<double>(situation.relativePosition.longitudinalDistance);
       data_intersection.same_direction_safe_distance = static_cast<double>(rssStateInformation.safeDistance);
     }
@@ -189,6 +189,18 @@ bool RssStructuredSceneIntersectionChecker::checkIntersectionSafe(Situation cons
         intersectionState = IntersectionState::NoTimeOverlap;
       }
     }
+  }
+  data_intersection.current_intersection_state_type_id = static_cast<int>(logging::to_underlying(intersectionState));
+  
+  // Temporary fix for the string representation of the intersection state
+  if(intersectionState == IntersectionState::NonPrioAbleToBreak){
+    data_intersection.current_intersection_state_type = "NonPrioAbleToBreak";
+  } else if(intersectionState == IntersectionState::SafeLongitudinalDistance){
+    data_intersection.current_intersection_state_type = "SafeLongitudinalDistance";
+  } else if(intersectionState == IntersectionState::NoTimeOverlap){
+    data_intersection.current_intersection_state_type = "NoTimeOverlap";
+  } else {
+    data_intersection.current_intersection_state_type = "Unknown";
   }
 
   return result;
