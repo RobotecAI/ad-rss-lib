@@ -94,15 +94,12 @@ logging::ExtendedSituationData & RssCheck::calculateProperResponse(world::WorldM
                                bool dummy)
 {
   // suppress dummy 
-  (void)dummy;
-
+ (void)dummy;
 
  bool result = calculateProperResponse(worldModel,situationSnapshot,rssStateSnapshot,properResponse);
- (void)result;
-
  auto & extended_situation_data = logging::ExtendedSituationData::getInstance();
+ extended_situation_data.is_evaluation_successful = result;
  return extended_situation_data;
-
 }
 
 } // namespace core

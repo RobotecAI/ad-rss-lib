@@ -159,6 +159,8 @@ class ExtendedSituationData
     void operator=(const ExtendedSituationData &) = delete;
 
     void setSituationData(SituationData & situation);
+    
+    bool is_evaluation_successful = false;
     std::vector<SituationData> situation_data{};
 
     protected:

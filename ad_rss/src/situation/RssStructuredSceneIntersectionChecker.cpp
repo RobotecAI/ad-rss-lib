@@ -120,7 +120,7 @@ bool RssStructuredSceneIntersectionChecker::checkIntersectionSafe(Situation cons
     rssStateInformation.currentDistance = situation.egoVehicleState.distanceToEnterIntersection;
     result = checkStopInFrontIntersection(situation.egoVehicleState, rssStateInformation.safeDistance, isSafe);
 
-    data_intersection.ego_current_distance_to_intersection = static_cast<double>(rssStateInformation.currentDistance);
+    data_intersection.ego_current_distance_to_intersection = static_cast<double>(situation.egoVehicleState.distanceToEnterIntersection);
     data_intersection.ego_safe_distance_to_intersection = static_cast<double>(rssStateInformation.safeDistance);
     data_intersection.npc_current_distance_to_intersection = -1.0;  // Not calculated
     data_intersection.npc_safe_distance_to_intersection = -1.0;
@@ -131,7 +131,7 @@ bool RssStructuredSceneIntersectionChecker::checkIntersectionSafe(Situation cons
     rssStateInformation.currentDistance = situation.otherVehicleState.distanceToEnterIntersection;
     result = checkStopInFrontIntersection(situation.otherVehicleState, rssStateInformation.safeDistance, isSafe);
 
-    data_intersection.npc_current_distance_to_intersection = static_cast<double>(rssStateInformation.currentDistance);
+    data_intersection.npc_current_distance_to_intersection = static_cast<double>(situation.otherVehicleState.distanceToEnterIntersection);
     data_intersection.npc_safe_distance_to_intersection = static_cast<double>(rssStateInformation.safeDistance);
   }
 
