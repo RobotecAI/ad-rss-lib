@@ -75,7 +75,6 @@ bool RssCheck::calculateProperResponse(world::WorldModel const &worldModel,
     result = false;
   }
   // LCOV_EXCL_STOP: unreachable code, keep to be on the safe side
-  auto &extended_situation_data = logging::ExtendedSituationData::getInstance();
   extended_situation_data.is_evaluation_successful = result;
   return result;
 }
