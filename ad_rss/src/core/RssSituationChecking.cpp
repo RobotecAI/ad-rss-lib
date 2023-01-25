@@ -111,7 +111,7 @@ bool RssSituationChecking::checkSituationInputRangeChecked(situation::Situation 
                                    situation.egoVehicleState.dynamics,
                                    IsSafe::No);
 
-    if(situation.situationType == situation::SituationType::NotRelevant)
+    if (situation.situationType == situation::SituationType::NotRelevant)
     {
       rssState = createRssState(situation.situationId,
                                 situation.situationType,
@@ -120,18 +120,18 @@ bool RssSituationChecking::checkSituationInputRangeChecked(situation::Situation 
                                 IsSafe::Yes);
       result = true;
     }
-    else if(situation.situationType == situation::SituationType::SameDirection ||
-            situation.situationType == situation::SituationType::OppositeDirection)
+    else if (situation.situationType == situation::SituationType::SameDirection
+             || situation.situationType == situation::SituationType::OppositeDirection)
     {
       result = mNonIntersectionChecker->calculateRssStateNonIntersection(mCurrentTimeIndex, situation, rssState);
     }
-    else if(situation.situationType == situation::SituationType::IntersectionEgoHasPriority ||
-            situation.situationType == situation::SituationType::IntersectionObjectHasPriority ||
-            situation.situationType == situation::SituationType::IntersectionSamePriority)
+    else if (situation.situationType == situation::SituationType::IntersectionEgoHasPriority
+             || situation.situationType == situation::SituationType::IntersectionObjectHasPriority
+             || situation.situationType == situation::SituationType::IntersectionSamePriority)
     {
       result = mIntersectionChecker->calculateRssStateIntersection(mCurrentTimeIndex, situation, rssState);
     }
-    else if(situation.situationType == situation::SituationType::Unstructured)
+    else if (situation.situationType == situation::SituationType::Unstructured)
     {
       result = mUnstructuredSceneChecker->calculateRssStateUnstructured(
         mCurrentTimeIndex, situation, rssStateSnapshot.unstructuredSceneEgoInformation, rssState);

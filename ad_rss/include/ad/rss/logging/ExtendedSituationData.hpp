@@ -34,98 +34,99 @@ namespace rss {
  */
 namespace logging {
 
-template <typename E>
-constexpr auto to_underlying(E e) noexcept
+template <typename E> constexpr auto to_underlying(E e) noexcept
 {
-    return static_cast<std::underlying_type_t<E>>(e);
+  return static_cast<std::underlying_type_t<E>>(e);
 }
 
 enum class SituationTypeId
 {
-    NotRelevant = 0,
-    SameDirection = 1,
-    OppositeDirection = 2,
-    IntersectionEgoHasPriority = 3,
-    IntersectionObjectHasPriority = 4,
-    IntersectionSamePriority = 5,
-    Unstructured = 6
+  NotRelevant = 0,
+  SameDirection = 1,
+  OppositeDirection = 2,
+  IntersectionEgoHasPriority = 3,
+  IntersectionObjectHasPriority = 4,
+  IntersectionSamePriority = 5,
+  Unstructured = 6
 };
 
 struct DataIntersection
 {
-    std::string longitudinal_relative_position;
-    int longitudinal_relative_position_id;
-    double npc_safe_distance_to_intersection;
-    double npc_current_distance_to_intersection;
-    double ego_safe_distance_to_intersection;
-    double ego_current_distance_to_intersection;
-    double npc_time_to_reach_intersection;
-    double npc_time_to_leave_intersection;
-    double ego_time_to_reach_intersection;
-    double ego_time_to_leave_intersection;
-    double same_direction_current_distance;
-    double same_direction_safe_distance;
-    std::string previous_intersection_state_type;
-    int previous_intersection_state_type_id;
-    std::string current_intersection_state_type;
-    int current_intersection_state_type_id;
+  std::string longitudinal_relative_position;
+  int longitudinal_relative_position_id;
+  double npc_safe_distance_to_intersection;
+  double npc_current_distance_to_intersection;
+  double ego_safe_distance_to_intersection;
+  double ego_current_distance_to_intersection;
+  double npc_time_to_reach_intersection;
+  double npc_time_to_leave_intersection;
+  double ego_time_to_reach_intersection;
+  double ego_time_to_leave_intersection;
+  double same_direction_current_distance;
+  double same_direction_safe_distance;
+  std::string previous_intersection_state_type;
+  int previous_intersection_state_type_id;
+  std::string current_intersection_state_type;
+  int current_intersection_state_type_id;
 
-    static DataIntersection & getInstance()
-    {
-        static DataIntersection instance;
-        return instance;
-    }
+  static DataIntersection &getInstance()
+  {
+    static DataIntersection instance;
+    return instance;
+  }
 
-    DataIntersection(DataIntersection const&) = delete;
-    DataIntersection(DataIntersection&&) = delete;
-    private:
-    DataIntersection() {};
+  DataIntersection(DataIntersection const &) = delete;
+  DataIntersection(DataIntersection &&) = delete;
+
+private:
+  DataIntersection(){};
 };
 
 struct DataNonIntersection
 {
-    bool is_ego_in_correct_lane;  // Only for opposite direction
-    std::string lateral_relative_position;
-    int lateral_relative_position_id;
-    std::string longitudinal_relative_position;
-    int longitudinal_relative_position_id;
+  bool is_ego_in_correct_lane; // Only for opposite direction
+  std::string lateral_relative_position;
+  int lateral_relative_position_id;
+  std::string longitudinal_relative_position;
+  int longitudinal_relative_position_id;
 
-    double longitudinal_safe_distance;
-    double longitudinal_current_distance;
-    double lateral_left_safe_distance;
-    double lateral_left_current_distance;
-    double lateral_right_safe_distance;
-    double lateral_right_current_distance;
+  double longitudinal_safe_distance;
+  double longitudinal_current_distance;
+  double lateral_left_safe_distance;
+  double lateral_left_current_distance;
+  double lateral_right_safe_distance;
+  double lateral_right_current_distance;
 
-    static DataNonIntersection & getInstance()
-    {
-        static DataNonIntersection instance;
-        return instance;
-    }
+  static DataNonIntersection &getInstance()
+  {
+    static DataNonIntersection instance;
+    return instance;
+  }
 
-    DataNonIntersection(DataNonIntersection const&) = delete;
-    DataNonIntersection(DataNonIntersection&&) = delete;
-    private:
-    DataNonIntersection() {};
+  DataNonIntersection(DataNonIntersection const &) = delete;
+  DataNonIntersection(DataNonIntersection &&) = delete;
+
+private:
+  DataNonIntersection(){};
 };
 
 struct DataUnstructured
-{   
-    bool is_ego_brake_npc_continue_safe;  // Condition one
-    bool is_npc_brake_ego_continue_safe;  // Condition two
-    bool is_ego_brake_npc_brake_safe;      // Condition three
-    
-    
-    static DataUnstructured & getInstance()
-    {
-        static DataUnstructured instance;
-        return instance;
-    }
+{
+  bool is_ego_brake_npc_continue_safe; // Condition one
+  bool is_npc_brake_ego_continue_safe; // Condition two
+  bool is_ego_brake_npc_brake_safe;    // Condition three
 
-    DataUnstructured(DataUnstructured const&) = delete;
-    DataUnstructured(DataUnstructured&&) = delete;
-    private:
-    DataUnstructured() {};
+  static DataUnstructured &getInstance()
+  {
+    static DataUnstructured instance;
+    return instance;
+  }
+
+  DataUnstructured(DataUnstructured const &) = delete;
+  DataUnstructured(DataUnstructured &&) = delete;
+
+private:
+  DataUnstructured(){};
 };
 
 /*!
@@ -136,40 +137,40 @@ struct DataUnstructured
 
 struct SituationData
 {
-std::string situation_type;
-SituationTypeId situation_type_id;
-int object_id;
-std::string object_name;  // Data not accessible, always filled "Unknown"
-bool is_safe;
+  std::string situation_type;
+  SituationTypeId situation_type_id;
+  int object_id;
+  std::string object_name; // Data not accessible, always filled "Unknown"
+  bool is_safe;
 
-std::variant<DataIntersection*, DataNonIntersection*, DataUnstructured*> data_variant_;
+  std::variant<DataIntersection *, DataNonIntersection *, DataUnstructured *> data_variant_;
 
-void setSituationData(DataIntersection & data_variant);
-void setSituationData(DataNonIntersection & data_variant);
-void setSituationData(DataUnstructured & data_variant);
+  void setSituationData(DataIntersection &data_variant);
+  void setSituationData(DataNonIntersection &data_variant);
+  void setSituationData(DataUnstructured &data_variant);
 };
 
 class ExtendedSituationData
 {
-    public: 
-    static ExtendedSituationData & getInstance();
-    void clear();
+public:
+  static ExtendedSituationData &getInstance();
+  void clear();
 
-    ExtendedSituationData(ExtendedSituationData &other) = delete;
-    void operator=(const ExtendedSituationData &) = delete;
+  ExtendedSituationData(ExtendedSituationData &other) = delete;
+  void operator=(const ExtendedSituationData &) = delete;
 
-    void setSituationData(SituationData & situation);
-    
-    bool is_evaluation_successful = false;
-    std::vector<SituationData> situation_data{};
+  void setSituationData(SituationData &situation);
 
-    protected:
-    ExtendedSituationData(){};
-    ~ExtendedSituationData(){};
+  bool is_evaluation_successful = false;
+  std::vector<SituationData> situation_data{};
 
-    private:
-    static ExtendedSituationData* instance_;
-    static std::mutex mtx_;
+protected:
+  ExtendedSituationData(){};
+  ~ExtendedSituationData(){};
+
+private:
+  static ExtendedSituationData *instance_;
+  static std::mutex mtx_;
 };
 
 } // namespace logging

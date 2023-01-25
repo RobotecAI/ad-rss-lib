@@ -72,7 +72,7 @@ bool RssUnstructuredSceneChecker::calculateRssStateUnstructured(world::TimeIndex
                                                                 state::RssState &rssState)
 {
   bool result = true;
-  auto & extended_situation_data = logging::ExtendedSituationData::getInstance();
+  auto &extended_situation_data = logging::ExtendedSituationData::getInstance();
   logging::SituationData situation_data;
   situation_data.situation_type_id = logging::SituationTypeId::Unstructured;
   situation_data.situation_type = "Unstructured";
@@ -176,7 +176,7 @@ bool RssUnstructuredSceneChecker::calculateState(Situation const &situation,
   auto const &egoContinueForward = egoStateInfo.continueForwardTrajectorySet;
   auto const &otherBrake = otherStateInfo.brakeTrajectorySet;
   auto const &otherContinueForward = otherStateInfo.continueForwardTrajectorySet;
-  auto & data_unstructured = logging::DataUnstructured::getInstance();
+  auto &data_unstructured = logging::DataUnstructured::getInstance();
 
   if (egoBrake.empty() || egoContinueForward.empty() || otherBrake.empty() || otherContinueForward.empty())
   {
@@ -246,16 +246,16 @@ bool RssUnstructuredSceneChecker::calculateState(Situation const &situation,
         spdlog::debug("Situation {} Rule 2: opponent is moving -> continue forward", situation.situationId);
         mode = DrivingMode::ContinueForward;
         data_unstructured.is_ego_brake_npc_brake_safe = false;
-      data_unstructured.is_ego_brake_npc_continue_safe = true;
-      data_unstructured.is_npc_brake_ego_continue_safe = false;
+        data_unstructured.is_ego_brake_npc_continue_safe = true;
+        data_unstructured.is_npc_brake_ego_continue_safe = false;
       }
       else
       {
         spdlog::debug("Situation {} Rule 2: opponent is stopped -> drive away", situation.situationId);
         mode = DrivingMode::DriveAway;
         data_unstructured.is_ego_brake_npc_brake_safe = false;
-      data_unstructured.is_ego_brake_npc_continue_safe = false;
-      data_unstructured.is_npc_brake_ego_continue_safe = true;
+        data_unstructured.is_ego_brake_npc_continue_safe = false;
+        data_unstructured.is_npc_brake_ego_continue_safe = true;
       }
     }
 

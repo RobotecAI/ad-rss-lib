@@ -53,8 +53,8 @@ bool RssCheck::calculateProperResponse(world::WorldModel const &worldModel,
       spdlog::critical("RssCheck::calculateProperResponse>> object not properly initialized");
       return false;
     }
-    
-    auto & extended_situation_data = logging::ExtendedSituationData::getInstance();
+
+    auto &extended_situation_data = logging::ExtendedSituationData::getInstance();
     extended_situation_data.clear();
 
     result = mSituationExtraction->extractSituations(worldModel, situationSnapshot);
@@ -87,19 +87,19 @@ bool RssCheck::calculateProperResponse(world::WorldModel const &worldModel, stat
   return calculateProperResponse(worldModel, situationSnapshot, rssStateSnapshot, properResponse);
 }
 
-logging::ExtendedSituationData & RssCheck::calculateProperResponse(world::WorldModel const &worldModel,
-                               situation::SituationSnapshot &situationSnapshot,
-                               state::RssStateSnapshot &rssStateSnapshot,
-                               state::ProperResponse &properResponse,
-                               bool dummy)
+logging::ExtendedSituationData &RssCheck::calculateProperResponse(world::WorldModel const &worldModel,
+                                                                  situation::SituationSnapshot &situationSnapshot,
+                                                                  state::RssStateSnapshot &rssStateSnapshot,
+                                                                  state::ProperResponse &properResponse,
+                                                                  bool dummy)
 {
-  // suppress dummy 
- (void)dummy;
+  // suppress dummy
+  (void)dummy;
 
- bool result = calculateProperResponse(worldModel,situationSnapshot,rssStateSnapshot,properResponse);
- auto & extended_situation_data = logging::ExtendedSituationData::getInstance();
- extended_situation_data.is_evaluation_successful = result;
- return extended_situation_data;
+  bool result = calculateProperResponse(worldModel, situationSnapshot, rssStateSnapshot, properResponse);
+  auto &extended_situation_data = logging::ExtendedSituationData::getInstance();
+  extended_situation_data.is_evaluation_successful = result;
+  return extended_situation_data;
 }
 
 } // namespace core
