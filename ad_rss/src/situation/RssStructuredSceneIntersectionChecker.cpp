@@ -108,6 +108,7 @@ bool RssStructuredSceneIntersectionChecker::checkIntersectionSafe(Situation cons
 
   bool result = true;
   isSafe = false;
+  const double not_calculated = -1.0;
   auto &data_intersection = logging::DataIntersection::getInstance();
   data_intersection.longitudinal_relative_position_id
     = logging::to_underlying(situation.relativePosition.longitudinalPosition);
@@ -124,8 +125,8 @@ bool RssStructuredSceneIntersectionChecker::checkIntersectionSafe(Situation cons
     data_intersection.ego_current_distance_to_intersection
       = static_cast<double>(situation.egoVehicleState.distanceToEnterIntersection);
     data_intersection.ego_safe_distance_to_intersection = static_cast<double>(rssStateInformation.safeDistance);
-    data_intersection.npc_current_distance_to_intersection = -1.0; // Not calculated
-    data_intersection.npc_safe_distance_to_intersection = -1.0;
+    data_intersection.npc_current_distance_to_intersection = not_calculated; // Not calculated
+    data_intersection.npc_safe_distance_to_intersection = not_calculated;
   }
   if (result && !isSafe && !situation.otherVehicleState.hasPriority)
   {
