@@ -183,6 +183,7 @@ bool RssStructuredSceneNonIntersectionChecker::calculateLongitudinalRssStateSame
 
   bool isSafe = false;
 
+
   if ((LongitudinalRelativePosition::InFront == situation.relativePosition.longitudinalPosition)
       || (LongitudinalRelativePosition::OverlapFront == situation.relativePosition.longitudinalPosition))
   {
