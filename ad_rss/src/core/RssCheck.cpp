@@ -44,7 +44,7 @@ bool RssCheck::calculateProperResponse(world::WorldModel const &worldModel,
                                        state::ProperResponse &properResponse)
 {
   bool result = false;
-  auto & extended_situation_data = logging::ExtendedSituationData::getInstance();
+  auto &extended_situation_data = logging::ExtendedSituationData::getInstance();
   extended_situation_data.clear();
   // global try catch block to ensure this library call doesn't throw an exception
   try
@@ -83,7 +83,6 @@ bool RssCheck::calculateProperResponse(world::WorldModel const &worldModel, stat
 {
   situation::SituationSnapshot situationSnapshot;
   state::RssStateSnapshot rssStateSnapshot;
-
   return calculateProperResponse(worldModel, situationSnapshot, rssStateSnapshot, properResponse);
 }
 

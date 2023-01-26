@@ -194,6 +194,9 @@ bool RssUnstructuredSceneChecker::calculateState(Situation const &situation,
   bool isSafeBrakeBoth = !egoBrakeOtherBrakeOverlap;
 
   auto isSafe = isSafeEgoMustBrake || isSafeOtherMustBrake || isSafeBrakeBoth;
+  data_unstructured.is_safe_ego_must_brake = isSafeEgoMustBrake;
+  data_unstructured.is_safe_other_must_brake = isSafeOtherMustBrake;
+  data_unstructured.is_safe_brake_both = isSafeBrakeBoth;
 
   spdlog::trace("Situation {} safe check: isSafeEgoMustBrake: {}, isSafeOtherMustBrake: {}, isSafeBrakeBoth: {}",
                 situation.situationId,
@@ -209,9 +212,6 @@ bool RssUnstructuredSceneChecker::calculateState(Situation const &situation,
                   isSafeOtherMustBrake ? "true" : "false");
     mNewOtherMustBrakeStatesBeforeDangerThresholdTime[situation.situationId] = isSafeOtherMustBrake;
     mode = DrivingMode::ContinueForward;
-    data_unstructured.is_ego_brake_npc_brake_safe = true;
-    data_unstructured.is_ego_brake_npc_continue_safe = true;
-    data_unstructured.is_npc_brake_ego_continue_safe = true;
   }
   else
   {
@@ -230,9 +230,7 @@ bool RssUnstructuredSceneChecker::calculateState(Situation const &situation,
     {
       spdlog::debug("Situation {} Rule 1: both stopped, unsafe distance -> drive away.", situation.situationId);
       mode = DrivingMode::DriveAway;
-      data_unstructured.is_ego_brake_npc_brake_safe = true;
-      data_unstructured.is_ego_brake_npc_continue_safe = false;
-      data_unstructured.is_npc_brake_ego_continue_safe = false;
+      data_unstructured.if_unsafe_are_both_car_at_full_stop = true;
     }
 
     // Rule 2: If:
@@ -245,17 +243,13 @@ bool RssUnstructuredSceneChecker::calculateState(Situation const &situation,
       {
         spdlog::debug("Situation {} Rule 2: opponent is moving -> continue forward", situation.situationId);
         mode = DrivingMode::ContinueForward;
-        data_unstructured.is_ego_brake_npc_brake_safe = false;
-        data_unstructured.is_ego_brake_npc_continue_safe = true;
-        data_unstructured.is_npc_brake_ego_continue_safe = false;
+        data_unstructured.if_unsafe_other_is_moving_ego_continue_forward = true;
       }
       else
       {
         spdlog::debug("Situation {} Rule 2: opponent is stopped -> drive away", situation.situationId);
         mode = DrivingMode::DriveAway;
-        data_unstructured.is_ego_brake_npc_brake_safe = false;
-        data_unstructured.is_ego_brake_npc_continue_safe = false;
-        data_unstructured.is_npc_brake_ego_continue_safe = true;
+        data_unstructured.if_unsafe_other_is_stopped_ego_drive_away = true;
       }
     }
 
@@ -264,9 +258,6 @@ bool RssUnstructuredSceneChecker::calculateState(Situation const &situation,
     {
       spdlog::debug("Situation {} Rule 3: brake (brake collides with other brake)", situation.situationId);
       mode = DrivingMode::Brake;
-      data_unstructured.is_ego_brake_npc_brake_safe = false;
-      data_unstructured.is_ego_brake_npc_continue_safe = false;
-      data_unstructured.is_npc_brake_ego_continue_safe = false;
     }
   }
 
@@ -299,6 +290,8 @@ bool RssUnstructuredSceneChecker::calculateState(Situation const &situation,
       break;
   }
 
+  data_unstructured.unstructured_response = std::to_string(rssState.response);
+  data_unstructured.unstructured_response_id = static_cast<int>(rssState.response);
   return result;
 }
 

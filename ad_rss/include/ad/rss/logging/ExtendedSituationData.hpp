@@ -112,9 +112,17 @@ private:
 
 struct DataUnstructured
 {
-  bool is_ego_brake_npc_continue_safe; // Condition one
-  bool is_npc_brake_ego_continue_safe; // Condition two
-  bool is_ego_brake_npc_brake_safe;    // Condition three
+  std::string unstructured_response;
+  int unstructured_response_id;
+
+  bool is_safe_ego_must_brake;
+  bool is_safe_other_must_brake;
+  bool is_safe_brake_both;
+
+  // Related to unsafe situation
+  bool if_unsafe_are_both_car_at_full_stop = false;
+  bool if_unsafe_other_is_moving_ego_continue_forward = false;
+  bool if_unsafe_other_is_stopped_ego_drive_away = false;
 
   static DataUnstructured &getInstance()
   {
