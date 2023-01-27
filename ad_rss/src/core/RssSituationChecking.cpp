@@ -119,6 +119,15 @@ bool RssSituationChecking::checkSituationInputRangeChecked(situation::Situation 
                                 situation.egoVehicleState.dynamics,
                                 IsSafe::Yes);
       result = true;
+      auto &extended_situation_data = logging::ExtendedSituationData::getInstance();
+      logging::SituationData situation_data;
+      situation_data.setSituationData(logging::DataIntersection::getInstance());
+      situation_data.situation_type = std::to_string(situation.situationType);
+      situation_data.situation_type_id = logging::SituationTypeId::NotRelevant;
+      situation_data.is_safe = true; // NotRelevant is always safe
+      situation_data.object_id = static_cast<int>(situation.objectId);
+      situation_data.object_name = "Unknown";
+      extended_situation_data.situation_data.push_back(situation_data);
     }
     else if (situation.situationType == situation::SituationType::SameDirection
              || situation.situationType == situation::SituationType::OppositeDirection)
