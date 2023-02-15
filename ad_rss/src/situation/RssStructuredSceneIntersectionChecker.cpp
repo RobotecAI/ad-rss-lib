@@ -25,7 +25,8 @@ using situation::calculateTimeToCoverDistance;
 bool RssStructuredSceneIntersectionChecker::checkLateralIntersect(Situation const &situation, bool &isSafe)
 {
   isSafe = false;
-  auto &data_intersection = logging::DataIntersection::getInstance();
+  auto &extended_situation_data = logging::ExtendedSituationData::getInstance();
+  auto &data_intersection = extended_situation_data.situation_data.back().data_intersection_.value();
 
   /**
    * Check if in any case the first vehicle has passed the intersection before the other
@@ -109,7 +110,8 @@ bool RssStructuredSceneIntersectionChecker::checkIntersectionSafe(Situation cons
   bool result = true;
   isSafe = false;
   const double not_calculated = -1.0;
-  auto &data_intersection = logging::DataIntersection::getInstance();
+  auto &extended_situation_data = logging::ExtendedSituationData::getInstance();
+  auto &data_intersection = extended_situation_data.situation_data.back().data_intersection_.value();
   data_intersection.longitudinal_relative_position_id
     = logging::to_underlying(situation.relativePosition.longitudinalPosition);
 
@@ -134,6 +136,8 @@ bool RssStructuredSceneIntersectionChecker::checkIntersectionSafe(Situation cons
     rssStateInformation.currentDistance = situation.otherVehicleState.distanceToEnterIntersection;
     result = checkStopInFrontIntersection(situation.otherVehicleState, rssStateInformation.safeDistance, isSafe);
 
+    data_intersection.ego_current_distance_to_intersection = not_calculated;
+    data_intersection.ego_safe_distance_to_intersection = not_calculated;
     data_intersection.npc_current_distance_to_intersection
       = static_cast<double>(situation.otherVehicleState.distanceToEnterIntersection);
     data_intersection.npc_safe_distance_to_intersection = static_cast<double>(rssStateInformation.safeDistance);
@@ -232,7 +236,9 @@ bool RssStructuredSceneIntersectionChecker::calculateRssStateIntersection(world:
   }
   bool result = false;
   auto &extended_situation_data = logging::ExtendedSituationData::getInstance();
-  logging::SituationData situation_data;
+  extended_situation_data.situation_data.push_back(logging::SituationData());
+  logging::SituationData& situation_data = extended_situation_data.situation_data.back();
+  situation_data.data_intersection_ = std::optional<logging::DataIntersection>{logging::DataIntersection()};
 
   if (situation.egoVehicleState.hasPriority)
   {
@@ -372,11 +378,9 @@ bool RssStructuredSceneIntersectionChecker::calculateRssStateIntersection(world:
   {
     result = false;
   }
-  situation_data.setSituationData(logging::DataIntersection::getInstance());
   situation_data.is_safe = rssState.longitudinalState.isSafe; // Intersection is always unsafe laterally
   situation_data.object_id = static_cast<int>(situation.objectId);
   situation_data.object_name = "Unknown";
-  extended_situation_data.situation_data.push_back(situation_data);
   return result;
 }
 

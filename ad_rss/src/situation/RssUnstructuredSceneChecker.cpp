@@ -73,7 +73,9 @@ bool RssUnstructuredSceneChecker::calculateRssStateUnstructured(world::TimeIndex
 {
   bool result = true;
   auto &extended_situation_data = logging::ExtendedSituationData::getInstance();
-  logging::SituationData situation_data;
+  extended_situation_data.situation_data.push_back(logging::SituationData());
+  logging::SituationData situation_data =  extended_situation_data.situation_data.back();
+  situation_data.data_unstructured_ = std::optional<logging::DataUnstructured>{logging::DataUnstructured()};
   situation_data.situation_type_id = logging::SituationTypeId::Unstructured;
   situation_data.situation_type = "Unstructured";
 
@@ -158,11 +160,9 @@ bool RssUnstructuredSceneChecker::calculateRssStateUnstructured(world::TimeIndex
       }
     }
   }
-  situation_data.setSituationData(logging::DataUnstructured::getInstance());
   situation_data.is_safe = rssState.unstructuredSceneState.isSafe;
   situation_data.object_id = static_cast<int>(situation.objectId);
   situation_data.object_name = "Unknown";
-  extended_situation_data.situation_data.push_back(situation_data);
   return result;
 }
 
@@ -176,7 +176,9 @@ bool RssUnstructuredSceneChecker::calculateState(Situation const &situation,
   auto const &egoContinueForward = egoStateInfo.continueForwardTrajectorySet;
   auto const &otherBrake = otherStateInfo.brakeTrajectorySet;
   auto const &otherContinueForward = otherStateInfo.continueForwardTrajectorySet;
-  auto &data_unstructured = logging::DataUnstructured::getInstance();
+
+  auto &extended_situation_data = logging::ExtendedSituationData::getInstance();
+  auto &data_unstructured = extended_situation_data.situation_data.back().data_unstructured_.value();
 
   if (egoBrake.empty() || egoContinueForward.empty() || otherBrake.empty() || otherContinueForward.empty())
   {

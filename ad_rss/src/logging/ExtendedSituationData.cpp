@@ -30,23 +30,6 @@ void ExtendedSituationData::setSituationData(SituationData &situation)
   this->situation_data.push_back(situation);
 }
 
-// SituationData
-
-void SituationData::setSituationData(DataIntersection &data_variant)
-{
-  data_variant_ = &data_variant;
-}
-
-void SituationData::setSituationData(DataNonIntersection &data_variant)
-{
-  data_variant_ = &data_variant;
-}
-
-void SituationData::setSituationData(DataUnstructured &data_variant)
-{
-  data_variant_ = &data_variant;
-}
-
 } // namespace logging
 } // namespace rss
 } // namespace ad

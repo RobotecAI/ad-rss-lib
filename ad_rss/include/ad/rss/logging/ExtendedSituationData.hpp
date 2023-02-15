@@ -14,7 +14,7 @@
 
 #include <memory>
 #include <type_traits>
-#include <variant>
+#include <optional>
 #include "ad/rss/situation/SituationSnapshot.hpp"
 #include "ad/rss/state/ProperResponse.hpp"
 #include "ad/rss/state/RssStateSnapshot.hpp"
@@ -68,18 +68,6 @@ struct DataIntersection
   int previous_intersection_state_type_id;
   std::string current_intersection_state_type;
   int current_intersection_state_type_id;
-
-  static DataIntersection &getInstance()
-  {
-    static DataIntersection instance;
-    return instance;
-  }
-
-  DataIntersection(DataIntersection const &) = delete;
-  DataIntersection(DataIntersection &&) = delete;
-
-private:
-  DataIntersection(){};
 };
 
 struct DataNonIntersection
@@ -96,18 +84,6 @@ struct DataNonIntersection
   double lateral_left_current_distance;
   double lateral_right_safe_distance;
   double lateral_right_current_distance;
-
-  static DataNonIntersection &getInstance()
-  {
-    static DataNonIntersection instance;
-    return instance;
-  }
-
-  DataNonIntersection(DataNonIntersection const &) = delete;
-  DataNonIntersection(DataNonIntersection &&) = delete;
-
-private:
-  DataNonIntersection(){};
 };
 
 struct DataUnstructured
@@ -123,18 +99,6 @@ struct DataUnstructured
   bool if_unsafe_are_both_car_at_full_stop = false;
   bool if_unsafe_other_is_moving_ego_continue_forward = false;
   bool if_unsafe_other_is_stopped_ego_drive_away = false;
-
-  static DataUnstructured &getInstance()
-  {
-    static DataUnstructured instance;
-    return instance;
-  }
-
-  DataUnstructured(DataUnstructured const &) = delete;
-  DataUnstructured(DataUnstructured &&) = delete;
-
-private:
-  DataUnstructured(){};
 };
 
 /*!
@@ -151,11 +115,9 @@ struct SituationData
   std::string object_name; // Data not accessible, always filled "Unknown"
   bool is_safe;
 
-  std::variant<DataIntersection *, DataNonIntersection *, DataUnstructured *> data_variant_;
-
-  void setSituationData(DataIntersection &data_variant);
-  void setSituationData(DataNonIntersection &data_variant);
-  void setSituationData(DataUnstructured &data_variant);
+  std::optional<DataIntersection> data_intersection_;
+  std::optional<DataNonIntersection> data_non_intersection_;
+  std::optional<DataUnstructured> data_unstructured_;
 };
 
 class ExtendedSituationData

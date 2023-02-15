@@ -121,7 +121,6 @@ bool RssSituationChecking::checkSituationInputRangeChecked(situation::Situation 
       result = true;
       auto &extended_situation_data = logging::ExtendedSituationData::getInstance();
       logging::SituationData situation_data;
-      situation_data.setSituationData(logging::DataIntersection::getInstance());
       situation_data.situation_type = "NotRelevant";
       situation_data.situation_type_id = logging::SituationTypeId::NotRelevant;
       situation_data.is_safe = true; // NotRelevant is always safe
