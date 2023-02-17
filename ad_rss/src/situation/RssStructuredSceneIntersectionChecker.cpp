@@ -27,7 +27,6 @@ bool RssStructuredSceneIntersectionChecker::checkLateralIntersect(Situation cons
   isSafe = false;
   auto &extended_situation_data = logging::ExtendedSituationData::getInstance();
   auto &data_intersection = extended_situation_data.safeGetLastSituationDataElement().getDataIntersection();
-  // auto &data_intersection = extended_situation_data.situation_data.back().data_intersection_.value();
 
   /**
    * Check if in any case the first vehicle has passed the intersection before the other
