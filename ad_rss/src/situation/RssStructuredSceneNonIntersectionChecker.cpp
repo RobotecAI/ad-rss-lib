@@ -28,7 +28,7 @@ bool RssStructuredSceneNonIntersectionChecker::calculateRssStateNonIntersection(
 
   auto &extended_situation_data = logging::ExtendedSituationData::getInstance();
   extended_situation_data.situation_data.push_back(logging::SituationData());
-  logging::SituationData& situation_data = extended_situation_data.safeGetLastSituationDataElement();
+  logging::SituationData &situation_data = extended_situation_data.safeGetLastSituationDataElement();
   situation_data.setDataNonIntersection(logging::DataNonIntersection());
 
   rssState.situationId = situation.situationId;

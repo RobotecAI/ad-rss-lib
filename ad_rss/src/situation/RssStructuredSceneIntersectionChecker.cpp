@@ -204,24 +204,7 @@ bool RssStructuredSceneIntersectionChecker::checkIntersectionSafe(Situation cons
     }
   }
   data_intersection.current_intersection_state_type_id = static_cast<int>(logging::to_underlying(intersectionState));
-
-  // Temporary fix for the string representation of the intersection state
-  if (intersectionState == IntersectionState::NonPrioAbleToBreak)
-  {
-    data_intersection.current_intersection_state_type = "NonPrioAbleToBreak";
-  }
-  else if (intersectionState == IntersectionState::SafeLongitudinalDistance)
-  {
-    data_intersection.current_intersection_state_type = "SafeLongitudinalDistance";
-  }
-  else if (intersectionState == IntersectionState::NoTimeOverlap)
-  {
-    data_intersection.current_intersection_state_type = "NoTimeOverlap";
-  }
-  else
-  {
-    data_intersection.current_intersection_state_type = "Unknown";
-  }
+  data_intersection.current_intersection_state_type = intersectionStateToString(intersectionState);
 
   return result;
 }
@@ -238,7 +221,7 @@ bool RssStructuredSceneIntersectionChecker::calculateRssStateIntersection(world:
   bool result = false;
   auto &extended_situation_data = logging::ExtendedSituationData::getInstance();
   extended_situation_data.situation_data.push_back(logging::SituationData());
-  logging::SituationData& situation_data = extended_situation_data.safeGetLastSituationDataElement();
+  logging::SituationData &situation_data = extended_situation_data.safeGetLastSituationDataElement();
   situation_data.setDataIntersection(logging::DataIntersection());
 
   if (situation.egoVehicleState.hasPriority)
@@ -316,6 +299,11 @@ bool RssStructuredSceneIntersectionChecker::calculateRssStateIntersection(world:
          */
         if (previousIntersectionState != mLastSafeStateMap.end())
         {
+          auto &data_intersection = extended_situation_data.safeGetLastSituationDataElement().getDataIntersection();
+          data_intersection.previous_intersection_state_type_id
+            = static_cast<int>(logging::to_underlying(previousIntersectionState->second));
+          data_intersection.previous_intersection_state_type
+            = intersectionStateToString(previousIntersectionState->second);
           switch (previousIntersectionState->second)
           {
             case IntersectionState::NonPrioAbleToBreak:

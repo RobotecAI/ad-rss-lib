@@ -30,54 +30,67 @@ void ExtendedSituationData::setSituationData(SituationData &situation)
   this->situation_data.push_back(situation);
 }
 
-SituationData & ExtendedSituationData::safeGetLastSituationDataElement(){
-  if (situation_data.empty()){
+SituationData &ExtendedSituationData::safeGetLastSituationDataElement()
+{
+  if (situation_data.empty())
+  {
     SituationData sd = SituationData();
     situation_data.push_back(sd);
   }
   return situation_data.back();
 }
 
-
-DataIntersection & SituationData::getDataIntersection(){
-  if (data_intersection_.has_value()){
+DataIntersection &SituationData::getDataIntersection()
+{
+  if (data_intersection_.has_value())
+  {
     return data_intersection_.value();
   }
-  else{
+  else
+  {
     data_intersection_ = DataIntersection();
     return data_intersection_.value();
   }
 }
 
-DataNonIntersection & SituationData::getDataNonIntersection(){
-  if (data_non_intersection_.has_value()){
+DataNonIntersection &SituationData::getDataNonIntersection()
+{
+  if (data_non_intersection_.has_value())
+  {
     return data_non_intersection_.value();
   }
-  else{
+  else
+  {
     data_non_intersection_ = DataNonIntersection();
     return data_non_intersection_.value();
   }
 }
 
-DataUnstructured & SituationData::getDataUnstructured(){
-  if (data_unstructured_.has_value()){
+DataUnstructured &SituationData::getDataUnstructured()
+{
+  if (data_unstructured_.has_value())
+  {
     return data_unstructured_.value();
   }
-  else{
+  else
+  {
     data_unstructured_ = DataUnstructured();
     return data_unstructured_.value();
   }
 }
 
-void SituationData::setDataIntersection(DataIntersection data){
+void SituationData::setDataIntersection(DataIntersection data)
+{
   data_intersection_ = data;
 }
 
-void SituationData::setDataNonIntersection(DataNonIntersection data){
+void SituationData::setDataNonIntersection(DataNonIntersection data)
+{
   data_non_intersection_ = data;
 }
 
-void SituationData::setDataUnstructured(DataUnstructured data){
+void SituationData::setDataUnstructured(DataUnstructured data)
+{
   data_unstructured_ = data;
 }
 

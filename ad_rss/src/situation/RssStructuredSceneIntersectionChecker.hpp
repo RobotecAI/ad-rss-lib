@@ -61,6 +61,26 @@ public:
     NoTimeOverlap = 2u             /*!< There is no time overlap between the paths of the two vehicles */
   };
 
+  std::string intersectionStateToString(const IntersectionState &intersection_state)
+  {
+    if (intersection_state == IntersectionState::NonPrioAbleToBreak)
+    {
+      return "NonPrioAbleToBreak";
+    }
+    else if (intersection_state == IntersectionState::SafeLongitudinalDistance)
+    {
+      return "SafeLongitudinalDistance";
+    }
+    else if (intersection_state == IntersectionState::NoTimeOverlap)
+    {
+      return "NoTimeOverlap";
+    }
+    else
+    {
+      return "Unknown";
+    }
+  }
+
   /**
    * @brief Constructor
    */

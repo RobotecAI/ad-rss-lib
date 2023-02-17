@@ -13,8 +13,8 @@
 #pragma once
 
 #include <memory>
-#include <type_traits>
 #include <optional>
+#include <type_traits>
 #include "ad/rss/situation/SituationSnapshot.hpp"
 #include "ad/rss/state/ProperResponse.hpp"
 #include "ad/rss/state/RssStateSnapshot.hpp"
@@ -110,9 +110,9 @@ struct DataUnstructured
 class SituationData
 {
 public:
-  DataIntersection & getDataIntersection();
-  DataNonIntersection & getDataNonIntersection();
-  DataUnstructured & getDataUnstructured();
+  DataIntersection &getDataIntersection();
+  DataNonIntersection &getDataNonIntersection();
+  DataUnstructured &getDataUnstructured();
 
   void setDataIntersection(DataIntersection data);
   void setDataNonIntersection(DataNonIntersection data);
@@ -121,7 +121,7 @@ public:
   std::string situation_type;
   SituationTypeId situation_type_id;
   int object_id;
-  std::string object_name;  // Not defined at ad-rss-lib, filled "Unknown"
+  std::string object_name; // Not defined at ad-rss-lib, filled "Unknown"
   bool is_safe;
 
 protected:
@@ -143,7 +143,7 @@ public:
 
   bool is_evaluation_successful = false;
 
-  SituationData& safeGetLastSituationDataElement();
+  SituationData &safeGetLastSituationDataElement();
 
   std::vector<SituationData> situation_data{};
 
