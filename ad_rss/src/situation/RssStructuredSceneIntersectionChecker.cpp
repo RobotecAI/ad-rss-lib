@@ -115,6 +115,11 @@ bool RssStructuredSceneIntersectionChecker::checkIntersectionSafe(Situation cons
   data_intersection.longitudinal_relative_position_id
     = logging::to_underlying(situation.relativePosition.longitudinalPosition);
 
+    data_intersection.ego_current_distance_to_intersection = not_calculated;
+    data_intersection.ego_safe_distance_to_intersection = not_calculated;
+    data_intersection.npc_current_distance_to_intersection = not_calculated;
+    data_intersection.npc_safe_distance_to_intersection = not_calculated;
+
   /**
    * Check if a non prio vehicle has safe distance to the intersection
    */
@@ -127,8 +132,6 @@ bool RssStructuredSceneIntersectionChecker::checkIntersectionSafe(Situation cons
     data_intersection.ego_current_distance_to_intersection
       = static_cast<double>(situation.egoVehicleState.distanceToEnterIntersection);
     data_intersection.ego_safe_distance_to_intersection = static_cast<double>(rssStateInformation.safeDistance);
-    data_intersection.npc_current_distance_to_intersection = not_calculated; // Not calculated
-    data_intersection.npc_safe_distance_to_intersection = not_calculated;
   }
   if (result && !isSafe && !situation.otherVehicleState.hasPriority)
   {
@@ -136,8 +139,6 @@ bool RssStructuredSceneIntersectionChecker::checkIntersectionSafe(Situation cons
     rssStateInformation.currentDistance = situation.otherVehicleState.distanceToEnterIntersection;
     result = checkStopInFrontIntersection(situation.otherVehicleState, rssStateInformation.safeDistance, isSafe);
 
-    data_intersection.ego_current_distance_to_intersection = not_calculated;
-    data_intersection.ego_safe_distance_to_intersection = not_calculated;
     data_intersection.npc_current_distance_to_intersection
       = static_cast<double>(situation.otherVehicleState.distanceToEnterIntersection);
     data_intersection.npc_safe_distance_to_intersection = static_cast<double>(rssStateInformation.safeDistance);
