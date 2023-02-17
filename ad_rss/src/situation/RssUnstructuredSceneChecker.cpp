@@ -74,8 +74,8 @@ bool RssUnstructuredSceneChecker::calculateRssStateUnstructured(world::TimeIndex
   bool result = true;
   auto &extended_situation_data = logging::ExtendedSituationData::getInstance();
   extended_situation_data.situation_data.push_back(logging::SituationData());
-  logging::SituationData situation_data =  extended_situation_data.situation_data.back();
-  situation_data.data_unstructured_ = std::optional<logging::DataUnstructured>{logging::DataUnstructured()};
+  logging::SituationData situation_data =  extended_situation_data.safeGetLastSituationDataElement();
+  situation_data.setDataUnstructured(logging::DataUnstructured());
   situation_data.situation_type_id = logging::SituationTypeId::Unstructured;
   situation_data.situation_type = "Unstructured";
 
@@ -178,7 +178,7 @@ bool RssUnstructuredSceneChecker::calculateState(Situation const &situation,
   auto const &otherContinueForward = otherStateInfo.continueForwardTrajectorySet;
 
   auto &extended_situation_data = logging::ExtendedSituationData::getInstance();
-  auto &data_unstructured = extended_situation_data.situation_data.back().data_unstructured_.value();
+  auto &data_unstructured = extended_situation_data.safeGetLastSituationDataElement().getDataUnstructured();
 
   if (egoBrake.empty() || egoContinueForward.empty() || otherBrake.empty() || otherContinueForward.empty())
   {

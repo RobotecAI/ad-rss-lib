@@ -28,8 +28,8 @@ bool RssStructuredSceneNonIntersectionChecker::calculateRssStateNonIntersection(
 
   auto &extended_situation_data = logging::ExtendedSituationData::getInstance();
   extended_situation_data.situation_data.push_back(logging::SituationData());
-  logging::SituationData& situation_data = extended_situation_data.situation_data.back();
-  situation_data.data_non_intersection_ = std::optional<logging::DataNonIntersection>{logging::DataNonIntersection()};
+  logging::SituationData& situation_data = extended_situation_data.safeGetLastSituationDataElement();
+  situation_data.setDataNonIntersection(logging::DataNonIntersection());
 
   rssState.situationId = situation.situationId;
   rssState.situationType = situation.situationType;
@@ -175,7 +175,7 @@ bool RssStructuredSceneNonIntersectionChecker::calculateLongitudinalRssStateSame
 {
   bool result = false;
   auto &extended_situation_data = logging::ExtendedSituationData::getInstance();
-  auto &data_non_intersection = extended_situation_data.situation_data.back().data_non_intersection_.value();
+  auto &data_non_intersection = extended_situation_data.safeGetLastSituationDataElement().getDataNonIntersection();
   data_non_intersection.longitudinal_relative_position_id
     = logging::to_underlying(situation.relativePosition.longitudinalPosition);
 
@@ -234,7 +234,7 @@ bool RssStructuredSceneNonIntersectionChecker::calculateLongitudinalRssStateOppo
   bool result = false;
 
   auto &extended_situation_data = logging::ExtendedSituationData::getInstance();
-  auto &data_non_intersection = extended_situation_data.situation_data.back().data_non_intersection_.value();
+  auto &data_non_intersection = extended_situation_data.safeGetLastSituationDataElement().getDataNonIntersection();
   data_non_intersection.longitudinal_relative_position_id
     = logging::to_underlying(situation.relativePosition.longitudinalPosition);
 
@@ -298,7 +298,7 @@ bool RssStructuredSceneNonIntersectionChecker::calculateLateralRssState(Situatio
   bool result = false;
 
   auto &extended_situation_data = logging::ExtendedSituationData::getInstance();
-  auto &data_non_intersection = extended_situation_data.situation_data.back().data_non_intersection_.value();
+  auto &data_non_intersection = extended_situation_data.safeGetLastSituationDataElement().getDataNonIntersection();
   data_non_intersection.lateral_relative_position_id
     = logging::to_underlying(situation.relativePosition.lateralPosition);
 

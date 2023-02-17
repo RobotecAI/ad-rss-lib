@@ -107,14 +107,24 @@ struct DataUnstructured
  * The structure SituationData contains information about the object
  */
 
-struct SituationData
+class SituationData
 {
+public:
+  DataIntersection & getDataIntersection();
+  DataNonIntersection & getDataNonIntersection();
+  DataUnstructured & getDataUnstructured();
+
+  void setDataIntersection(DataIntersection data);
+  void setDataNonIntersection(DataNonIntersection data);
+  void setDataUnstructured(DataUnstructured data);
+
   std::string situation_type;
   SituationTypeId situation_type_id;
   int object_id;
-  std::string object_name; // Data not accessible, always filled "Unknown"
+  std::string object_name;  // Not defined at ad-rss-lib, filled "Unknown"
   bool is_safe;
 
+protected:
   std::optional<DataIntersection> data_intersection_;
   std::optional<DataNonIntersection> data_non_intersection_;
   std::optional<DataUnstructured> data_unstructured_;
@@ -132,6 +142,9 @@ public:
   void setSituationData(SituationData &situation);
 
   bool is_evaluation_successful = false;
+
+  SituationData& safeGetLastSituationDataElement();
+
   std::vector<SituationData> situation_data{};
 
 protected:
