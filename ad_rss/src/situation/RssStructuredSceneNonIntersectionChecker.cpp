@@ -241,6 +241,7 @@ bool RssStructuredSceneNonIntersectionChecker::calculateLongitudinalRssStateOppo
   bool isSafe = false;
   rssState.response = state::LongitudinalResponse::BrakeMin;
   rssState.rssStateInformation.currentDistance = situation.relativePosition.longitudinalDistance;
+  data_non_intersection.is_ego_in_correct_lane = situation.egoVehicleState.isInCorrectLane;
 
   if (situation.egoVehicleState.isInCorrectLane)
   {
