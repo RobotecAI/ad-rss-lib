@@ -162,10 +162,6 @@ bool RssStructuredSceneIntersectionChecker::checkIntersectionSafe(Situation cons
                                                           situation.relativePosition.longitudinalDistance,
                                                           rssStateInformation.safeDistance,
                                                           isSafe);
-
-      data_intersection.longitudinal_relative_position = "EgoInFront";
-      data_intersection.longitudinal_relative_position_id
-        = logging::to_underlying(situation.relativePosition.longitudinalPosition);
       data_intersection.same_direction_current_distance
         = static_cast<double>(situation.relativePosition.longitudinalDistance);
       data_intersection.same_direction_safe_distance = static_cast<double>(rssStateInformation.safeDistance);
@@ -178,14 +174,12 @@ bool RssStructuredSceneIntersectionChecker::checkIntersectionSafe(Situation cons
                                                           situation.relativePosition.longitudinalDistance,
                                                           rssStateInformation.safeDistance,
                                                           isSafe);
-
-      data_intersection.longitudinal_relative_position = "OtherInFront";
-      data_intersection.longitudinal_relative_position_id
-        = logging::to_underlying(situation.relativePosition.longitudinalPosition);
       data_intersection.same_direction_current_distance
         = static_cast<double>(situation.relativePosition.longitudinalDistance);
       data_intersection.same_direction_safe_distance = static_cast<double>(rssStateInformation.safeDistance);
     }
+    data_intersection.longitudinal_relative_position = toString(situation.relativePosition.longitudinalPosition);
+    data_intersection.longitudinal_relative_position_id = logging::to_underlying(situation.relativePosition.longitudinalPosition);
     if (isSafe)
     {
       intersectionState = IntersectionState::SafeLongitudinalDistance;
