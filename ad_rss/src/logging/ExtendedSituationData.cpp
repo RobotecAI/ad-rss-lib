@@ -4,6 +4,20 @@ namespace ad {
 namespace rss {
 namespace logging {
 
+std::string stripNamespace(const std::string &name){
+  // Returns last two parts of the name (e.g. "ad::rss::situation::SituationType::IntersectionEgoHasPriority" -> "SituationType::IntersectionEgoHasPriority")
+
+  std::string::size_type pos = name.find_last_of("::");
+  if (pos == std::string::npos)
+    return name;
+
+  std::string::size_type pos2 = name.find_last_of("::", pos - 2);
+  if (pos2 == std::string::npos)
+    return name;
+  
+  return name.substr(pos2 + 1);
+}
+
 ExtendedSituationData *ExtendedSituationData::instance_{nullptr};
 std::mutex ExtendedSituationData::mtx_;
 

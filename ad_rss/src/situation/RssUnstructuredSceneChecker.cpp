@@ -292,7 +292,7 @@ bool RssUnstructuredSceneChecker::calculateState(Situation const &situation,
       break;
   }
 
-  data_unstructured.unstructured_response = std::to_string(rssState.response);
+  data_unstructured.unstructured_response = logging::stripNamespace(std::to_string(rssState.response));
   data_unstructured.unstructured_response_id = static_cast<int>(rssState.response);
   return result;
 }

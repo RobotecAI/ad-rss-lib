@@ -178,7 +178,7 @@ bool RssStructuredSceneIntersectionChecker::checkIntersectionSafe(Situation cons
         = static_cast<double>(situation.relativePosition.longitudinalDistance);
       data_intersection.same_direction_safe_distance = static_cast<double>(rssStateInformation.safeDistance);
     }
-    data_intersection.longitudinal_relative_position = toString(situation.relativePosition.longitudinalPosition);
+    data_intersection.longitudinal_relative_position = logging::stripNamespace(toString(situation.relativePosition.longitudinalPosition));
     data_intersection.longitudinal_relative_position_id = logging::to_underlying(situation.relativePosition.longitudinalPosition);
     if (isSafe)
     {
