@@ -58,6 +58,11 @@ enum class LaneSegmentType : int32_t
 std::string toString(::ad::rss::world::LaneSegmentType const e);
 
 /*!
+ * \brief Conversion of ::ad::rss::world::LaneSegmentType to std::string helper without namespace.
+ */
+std::string toStringWithoutNamespace(::ad::rss::world::LaneSegmentType const e);
+
+/*!
  * \brief Conversion from std::string to enum type T helper.
  *
  * \param [in] str - a fully qualified string name of enum class type

@@ -35,6 +35,23 @@ std::string toString(::ad::rss::state::UnstructuredSceneResponse const e)
   }
 }
 
+std::string toStringWithoutNamespace(::ad::rss::state::UnstructuredSceneResponse const e)
+{
+  switch (e)
+  {
+    case ::ad::rss::state::UnstructuredSceneResponse::None:
+      return std::string("UnstructuredSceneResponse::None"); // LCOV_EXCL_BR_LINE
+    case ::ad::rss::state::UnstructuredSceneResponse::ContinueForward:
+      return std::string("UnstructuredSceneResponse::ContinueForward"); // LCOV_EXCL_BR_LINE
+    case ::ad::rss::state::UnstructuredSceneResponse::DriveAway:
+      return std::string("UnstructuredSceneResponse::DriveAway"); // LCOV_EXCL_BR_LINE
+    case ::ad::rss::state::UnstructuredSceneResponse::Brake:
+      return std::string("UnstructuredSceneResponse::Brake"); // LCOV_EXCL_BR_LINE
+    default:
+      return std::string("UNKNOWN ENUM VALUE"); // LCOV_EXCL_BR_LINE
+  }
+}
+
 template <>::ad::rss::state::UnstructuredSceneResponse fromString(std::string const &str)
 {
   if (str == std::string("::ad::rss::state::UnstructuredSceneResponse::None")) // LCOV_EXCL_BR_LINE

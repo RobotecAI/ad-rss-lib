@@ -37,6 +37,25 @@ std::string toString(::ad::rss::situation::LongitudinalRelativePosition const e)
   }
 }
 
+std::string toStringWithoutNamespace(::ad::rss::situation::LongitudinalRelativePosition const e)
+{
+  switch (e)
+  {
+    case ::ad::rss::situation::LongitudinalRelativePosition::InFront:
+      return std::string("LongitudinalRelativePosition::InFront"); // LCOV_EXCL_BR_LINE
+    case ::ad::rss::situation::LongitudinalRelativePosition::OverlapFront:
+      return std::string("LongitudinalRelativePosition::OverlapFront"); // LCOV_EXCL_BR_LINE
+    case ::ad::rss::situation::LongitudinalRelativePosition::Overlap:
+      return std::string("LongitudinalRelativePosition::Overlap"); // LCOV_EXCL_BR_LINE
+    case ::ad::rss::situation::LongitudinalRelativePosition::OverlapBack:
+      return std::string("LongitudinalRelativePosition::OverlapBack"); // LCOV_EXCL_BR_LINE
+    case ::ad::rss::situation::LongitudinalRelativePosition::AtBack:
+      return std::string("LongitudinalRelativePosition::AtBack"); // LCOV_EXCL_BR_LINE
+    default:
+      return std::string("UNKNOWN ENUM VALUE"); // LCOV_EXCL_BR_LINE
+  }
+}
+
 template <>::ad::rss::situation::LongitudinalRelativePosition fromString(std::string const &str)
 {
   if (str == std::string("::ad::rss::situation::LongitudinalRelativePosition::InFront")) // LCOV_EXCL_BR_LINE

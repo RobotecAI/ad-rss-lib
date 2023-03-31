@@ -62,6 +62,11 @@ enum class LateralResponse : int32_t
 std::string toString(::ad::rss::state::LateralResponse const e);
 
 /*!
+ * \brief Conversion of ::ad::rss::state::LateralResponse to std::string helper without namespace.
+ */
+std::string toStringWithoutNamespace(::ad::rss::state::LateralResponse const e);
+
+/*!
  * \brief Conversion from std::string to enum type T helper.
  *
  * \param [in] str - a fully qualified string name of enum class type

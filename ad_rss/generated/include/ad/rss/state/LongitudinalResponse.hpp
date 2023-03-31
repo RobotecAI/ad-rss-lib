@@ -67,6 +67,11 @@ enum class LongitudinalResponse : int32_t
 std::string toString(::ad::rss::state::LongitudinalResponse const e);
 
 /*!
+ * \brief Conversion of std::string to ::ad::rss::state::LongitudinalResponse helper without namespace.
+ */
+std::string toStringWithoutNamespace(::ad::rss::state::LongitudinalResponse const e);
+
+/*!
  * \brief Conversion from std::string to enum type T helper.
  *
  * \param [in] str - a fully qualified string name of enum class type

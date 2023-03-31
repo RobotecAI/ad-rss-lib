@@ -33,6 +33,21 @@ std::string toString(::ad::rss::state::LongitudinalResponse const e)
   }
 }
 
+std::string toStringWithoutNamespace(::ad::rss::state::LongitudinalResponse const e)
+{
+  switch (e)
+  {
+    case ::ad::rss::state::LongitudinalResponse::None:
+      return std::string("LongitudinalResponse::None"); // LCOV_EXCL_BR_LINE
+    case ::ad::rss::state::LongitudinalResponse::BrakeMinCorrect:
+      return std::string("LongitudinalResponse::BrakeMinCorrect"); // LCOV_EXCL_BR_LINE
+    case ::ad::rss::state::LongitudinalResponse::BrakeMin:
+      return std::string("LongitudinalResponse::BrakeMin"); // LCOV_EXCL_BR_LINE
+    default:
+      return std::string("UNKNOWN ENUM VALUE"); // LCOV_EXCL_BR_LINE
+  }
+}
+
 template <>::ad::rss::state::LongitudinalResponse fromString(std::string const &str)
 {
   if (str == std::string("::ad::rss::state::LongitudinalResponse::None")) // LCOV_EXCL_BR_LINE

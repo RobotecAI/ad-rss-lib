@@ -41,6 +41,29 @@ std::string toString(::ad::rss::situation::SituationType const e)
   }
 }
 
+std::string toStringWithoutNamespace(::ad::rss::situation::SituationType const e)
+{
+  switch (e)
+  {
+    case ::ad::rss::situation::SituationType::NotRelevant:
+      return std::string("SituationType::NotRelevant"); // LCOV_EXCL_BR_LINE
+    case ::ad::rss::situation::SituationType::SameDirection:
+      return std::string("SituationType::SameDirection"); // LCOV_EXCL_BR_LINE
+    case ::ad::rss::situation::SituationType::OppositeDirection:
+      return std::string("SituationType::OppositeDirection"); // LCOV_EXCL_BR_LINE
+    case ::ad::rss::situation::SituationType::IntersectionEgoHasPriority:
+      return std::string("SituationType::IntersectionEgoHasPriority"); // LCOV_EXCL_BR_LINE
+    case ::ad::rss::situation::SituationType::IntersectionObjectHasPriority:
+      return std::string("SituationType::IntersectionObjectHasPriority"); // LCOV_EXCL_BR_LINE
+    case ::ad::rss::situation::SituationType::IntersectionSamePriority:
+      return std::string("SituationType::IntersectionSamePriority"); // LCOV_EXCL_BR_LINE
+    case ::ad::rss::situation::SituationType::Unstructured:
+      return std::string("SituationType::Unstructured"); // LCOV_EXCL_BR_LINE
+    default:
+      return std::string("UNKNOWN ENUM VALUE"); // LCOV_EXCL_BR_LINE
+  }
+}
+
 template <>::ad::rss::situation::SituationType fromString(std::string const &str)
 {
   if (str == std::string("::ad::rss::situation::SituationType::NotRelevant")) // LCOV_EXCL_BR_LINE

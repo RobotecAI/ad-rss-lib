@@ -33,6 +33,21 @@ std::string toString(::ad::rss::world::LaneDrivingDirection const e)
   }
 }
 
+std::string toStringWithoutNamespace(::ad::rss::world::LaneDrivingDirection const e)
+{
+  switch (e)
+  {
+    case ::ad::rss::world::LaneDrivingDirection::Bidirectional:
+      return std::string("LaneDrivingDirection::Bidirectional"); // LCOV_EXCL_BR_LINE
+    case ::ad::rss::world::LaneDrivingDirection::Positive:
+      return std::string("LaneDrivingDirection::Positive"); // LCOV_EXCL_BR_LINE
+    case ::ad::rss::world::LaneDrivingDirection::Negative:
+      return std::string("LaneDrivingDirection::Negative"); // LCOV_EXCL_BR_LINE
+    default:
+      return std::string("UNKNOWN ENUM VALUE"); // LCOV_EXCL_BR_LINE
+  }
+}
+
 template <>::ad::rss::world::LaneDrivingDirection fromString(std::string const &str)
 {
   if (str == std::string("::ad::rss::world::LaneDrivingDirection::Bidirectional")) // LCOV_EXCL_BR_LINE

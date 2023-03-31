@@ -68,6 +68,11 @@ enum class UnstructuredSceneResponse : int32_t
 std::string toString(::ad::rss::state::UnstructuredSceneResponse const e);
 
 /*!
+ * \brief Conversion of ::ad::rss::state::UnstructuredSceneResponse to std::string helper without namespace.
+ */
+std::string toStringWithoutNamespace(::ad::rss::state::UnstructuredSceneResponse const e);
+
+/*!
  * \brief Conversion from std::string to enum type T helper.
  *
  * \param [in] str - a fully qualified string name of enum class type

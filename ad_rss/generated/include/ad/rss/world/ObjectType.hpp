@@ -75,6 +75,11 @@ enum class ObjectType : int32_t
 std::string toString(::ad::rss::world::ObjectType const e);
 
 /*!
+ * \brief Conversion of ::ad::rss::world::ObjectType to std::string helper.
+ */
+std::string toStringWithoutNamespace(::ad::rss::world::ObjectType const e);
+
+/*!
  * \brief Conversion from std::string to enum type T helper.
  *
  * \param [in] str - a fully qualified string name of enum class type

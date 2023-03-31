@@ -31,6 +31,19 @@ std::string toString(::ad::rss::world::LaneSegmentType const e)
   }
 }
 
+std::string toStringWithoutNamespace(::ad::rss::world::LaneSegmentType const e)
+{
+  switch (e)
+  {
+    case ::ad::rss::world::LaneSegmentType::Normal:
+      return std::string("LaneSegmentType::Normal"); // LCOV_EXCL_BR_LINE
+    case ::ad::rss::world::LaneSegmentType::Intersection:
+      return std::string("LaneSegmentType::Intersection"); // LCOV_EXCL_BR_LINE
+    default:
+      return std::string("UNKNOWN ENUM VALUE"); // LCOV_EXCL_BR_LINE
+  }
+}
+
 template <>::ad::rss::world::LaneSegmentType fromString(std::string const &str)
 {
   if (str == std::string("::ad::rss::world::LaneSegmentType::Normal")) // LCOV_EXCL_BR_LINE

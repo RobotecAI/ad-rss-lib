@@ -78,6 +78,11 @@ enum class LongitudinalRelativePosition : int32_t
 std::string toString(::ad::rss::situation::LongitudinalRelativePosition const e);
 
 /*!
+ * \brief Conversion of ::ad::rss::situation::LongitudinalRelativePosition to std::string helper without namespace.
+ */
+std::string toStringWithoutNamespace(::ad::rss::situation::LongitudinalRelativePosition const e);
+
+/*!
  * \brief Conversion from std::string to enum type T helper.
  *
  * \param [in] str - a fully qualified string name of enum class type

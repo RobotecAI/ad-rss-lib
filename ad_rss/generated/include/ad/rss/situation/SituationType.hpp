@@ -87,6 +87,11 @@ enum class SituationType : int32_t
 std::string toString(::ad::rss::situation::SituationType const e);
 
 /*!
+ * \brief Conversion of ::ad::rss::situation::SituationType to std::string helper.
+ */
+std::string toStringWithoutNamespace(::ad::rss::situation::SituationType const e);
+
+/*!
  * \brief Conversion from std::string to enum type T helper.
  *
  * \param [in] str - a fully qualified string name of enum class type

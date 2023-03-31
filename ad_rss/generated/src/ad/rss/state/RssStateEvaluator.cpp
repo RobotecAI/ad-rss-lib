@@ -55,6 +55,37 @@ std::string toString(::ad::rss::state::RssStateEvaluator const e)
   }
 }
 
+std::string toStringWithoutNamespace(::ad::rss::state::RssStateEvaluator const e)
+{
+  switch (e)
+  {
+    case ::ad::rss::state::RssStateEvaluator::None:
+      return std::string("RssStateEvaluator::None"); // LCOV_EXCL_BR_LINE
+    case ::ad::rss::state::RssStateEvaluator::LongitudinalDistanceOppositeDirectionEgoCorrectLane:
+      return std::string("RssStateEvaluator::LongitudinalDistanceOppositeDirectionEgoCorrectLane"); // LCOV_EXCL_BR_LINE
+    case ::ad::rss::state::RssStateEvaluator::LongitudinalDistanceOppositeDirection:
+      return std::string("RssStateEvaluator::LongitudinalDistanceOppositeDirection"); // LCOV_EXCL_BR_LINE
+    case ::ad::rss::state::RssStateEvaluator::LongitudinalDistanceSameDirectionEgoFront:
+      return std::string("RssStateEvaluator::LongitudinalDistanceSameDirectionEgoFront"); // LCOV_EXCL_BR_LINE
+    case ::ad::rss::state::RssStateEvaluator::LongitudinalDistanceSameDirectionOtherInFront:
+      return std::string("RssStateEvaluator::LongitudinalDistanceSameDirectionOtherInFront"); // LCOV_EXCL_BR_LINE
+    case ::ad::rss::state::RssStateEvaluator::LateralDistance:
+      return std::string("RssStateEvaluator::LateralDistance"); // LCOV_EXCL_BR_LINE
+    case ::ad::rss::state::RssStateEvaluator::IntersectionOtherPriorityEgoAbleToStop:
+      return std::string("RssStateEvaluator::IntersectionOtherPriorityEgoAbleToStop"); // LCOV_EXCL_BR_LINE
+    case ::ad::rss::state::RssStateEvaluator::IntersectionEgoPriorityOtherAbleToStop:
+      return std::string("RssStateEvaluator::IntersectionEgoPriorityOtherAbleToStop"); // LCOV_EXCL_BR_LINE
+    case ::ad::rss::state::RssStateEvaluator::IntersectionEgoInFront:
+      return std::string("RssStateEvaluator::IntersectionEgoInFront"); // LCOV_EXCL_BR_LINE
+    case ::ad::rss::state::RssStateEvaluator::IntersectionOtherInFront:
+      return std::string("RssStateEvaluator::IntersectionOtherInFront"); // LCOV_EXCL_BR_LINE
+    case ::ad::rss::state::RssStateEvaluator::IntersectionOverlap:
+      return std::string("RssStateEvaluator::IntersectionOverlap"); // LCOV_EXCL_BR_LINE
+    default:
+      return std::string("UNKNOWN ENUM VALUE");
+  }
+}
+
 template <>::ad::rss::state::RssStateEvaluator fromString(std::string const &str)
 {
   if (str == std::string("::ad::rss::state::RssStateEvaluator::None")) // LCOV_EXCL_BR_LINE
