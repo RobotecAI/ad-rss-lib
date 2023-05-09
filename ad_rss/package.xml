@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>ad_rss</name>
+  <version>4.5.2</version>
+  <description>C++ Library for Responsibility Sensitive Safety</description>
+
+  <maintainer email="adam.gotlib@robotec.ai">Adam Gotlib</maintainer>
+  <author email="bernd.gassmann@intel.com">Bernd Gassmann</author>
+  <license>GPLv2</license>
+
+  <depend>ad_physics</depend>
+  <depend>spdlog</depend>
+  <depend>boost</depend>
+
+  <test_depend>gtest</test_depend>
+</package>
