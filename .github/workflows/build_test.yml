@@ -94,3 +94,35 @@ jobs:
         sudo apt-get install ${EXTRA_PACKAGES}
         rm -rf log build install
         eval CC=${CC} CXX=${CXX} ${BUILDCMD}
+
+  ubuntu22job:
+    name: Ubuntu 22.04
+    runs-on: ubuntu-22.04
+
+    strategy:
+      matrix:
+       include:
+         - compiler: gcc11
+           EXTRA_PACKAGES: ""
+           CC: ""
+           CXX: ""
+           PYTHON_BINDING_VERSION: "3.10"
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+          submodules: recursive
+
+    - name: Install Dependencies
+      run: bash .github/workflows/install_dependencies.sh
+
+    - name: Build and Test
+      env:
+          CC: ${{ matrix.CC }}
+          CXX: ${{ matrix.CXX }}
+          EXTRA_PACKAGES: ${{ matrix.EXTRA_PACKAGES }}
+          PYTHON_BINDING_VERSION: ${{ matrix.PYTHON_BINDING_VERSION }}
+      run: |
+        sudo apt-get install ${EXTRA_PACKAGES}
+        rm -rf log build install
+        eval CC=${CC} CXX=${CXX} ${BUILDCMD}
