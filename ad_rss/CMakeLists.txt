@@ -35,6 +35,17 @@ find_package(spdlog REQUIRED CONFIG)
 
 include(generated/ad_rss.cmake)
 
+# Surpress warnings coming from Boost
+# See: https://stackoverflow.com/questions/66906613/how-to-silence-internal-boost-deprecated-messages
+add_definitions("-DBOOST_ALLOW_DEPRECATED_HEADERS")
+
+# Ignore additional variables added when building with colcon
+# See: https://stackoverflow.com/questions/36451368/get-rid-of-cmake-warning-manually-specified-variables-were-not-used-by-the-proj
+set(IGNORED_VARIABLES
+  ${CATKIN_INSTALL_INTO_PREFIX_ROOT}
+  ${CATKIN_SYMLINK_INSTALL}
+)
+
 add_library(${PROJECT_NAME}
   ${ad_rss_GENERATED_SOURCES}
   ${CMAKE_CURRENT_SOURCE_DIR}/src/core/RssCheck.cpp
