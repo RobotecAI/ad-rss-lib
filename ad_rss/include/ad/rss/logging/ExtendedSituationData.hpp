@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2023 Intel Corporation and Robotec.ai
+// Copyright (C) 2018-2023 TIER IV and Robotec.ai
 //
 // SPDX-License-Identifier: LGPL-2.1-only
 //
